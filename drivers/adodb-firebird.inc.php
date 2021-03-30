@@ -993,7 +993,6 @@ class  ADORecordset_firebird extends ADORecordSet
 
 	var $databaseType = "firebird";
 	var $bind=false;
-	var $_cacheType;
 
 	/*
 	 * Holds a cached version of the metadata
@@ -1095,13 +1094,6 @@ class  ADORecordset_firebird extends ADORecordSet
 			$this->fieldObjects[$fieldOffset] = $fld;
 
 			$this->fieldObjectsIndex[$fld->name] = $fieldOffset;
-
-			/* 
-			*cache types for blob decode check. We could look
-			* at $fieldObjects instead
-			*/
-			$this->_cacheType[] = $ibf['type'];
-
 		}
 		
 		if ($fieldOffset == -1)
@@ -1160,7 +1152,7 @@ class  ADORecordset_firebird extends ADORecordSet
 		$rtrim = !empty($ADODB_ANSI_PADDING_OFF);
 
 		for ($i=0, $max = $this->_numOfFields; $i < $max; $i++) {
-			if ($this->_cacheType[$i]=="BLOB") {
+			if ($this->fieldObjects[$i]->type=="BLOB") {
 				if (isset($f[$i])) {
 					$f[$i] = $this->connection->_BlobDecode($f[$i]);
 				} else {
