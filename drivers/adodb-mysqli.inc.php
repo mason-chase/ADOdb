@@ -63,7 +63,7 @@ class ADODB_mysqli extends ADOConnection {
 	var $clientFlags = 0;
 	var $substr = "substring";
 	var $port = 3306; //Default to 3306 to fix HHVM bug
-	var $socket = ''; //Default to empty string to fix HHVM bug
+	var $socket = '/var/run/mysqld/mysqld.sock'; //Default to empty string to fix HHVM bug
 	var $_bindInputArray = false;
 	var $nameQuote = '`';		/// string to use to quote identifiers and names
 	var $optionFlags = array(array(MYSQLI_READ_DEFAULT_GROUP,0));
