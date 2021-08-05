@@ -123,8 +123,6 @@ class ADODB_mysqli extends ADOConnection {
 	/**
 	 * Connect to a database.
 	 *
-	 * @todo add: parameter int $port, parameter string $socket
-	 *
 	 * @param string|null $argHostname (Optional) The host to connect to.
 	 * @param string|null $argUsername (Optional) The username to connect as.
 	 * @param string|null $argPassword (Optional) The password to connect with.
@@ -133,6 +131,9 @@ class ADODB_mysqli extends ADOConnection {
 	 *
 	 * @return bool|null True if connected successfully, false if connection failed, or null if the mysqli extension
 	 * isn't currently loaded.
+	 * @throws Exception
+	 * @todo add: parameter int $port, parameter string $socket
+	 *
 	 */
 	function _connect($argHostname = null,
 					  $argUsername = null,
@@ -204,6 +205,7 @@ class ADODB_mysqli extends ADOConnection {
 				ADOConnection::outp("Could not connect : "  . $this->errorMsg());
 			}
 			$this->_connectionID = null;
+			throw new Exception("Failed to connect to $argHostname (socket: $this->socket) mysql:". mysqli_connect_error());
 			return false;
 		}
 	}
