@@ -188,7 +188,7 @@ class ADODB_mysqli extends ADOConnection {
 
 		#if (!empty($this->port)) $argHostname .= ":".$this->port;
 		$ok = @mysqli_real_connect($this->_connectionID,
-					$argHostname,
+					(empty($argHostname) ? "localhost" : $argHostname),
 					$argUsername,
 					$argPassword,
 					$argDatabasename,
@@ -205,7 +205,6 @@ class ADODB_mysqli extends ADOConnection {
 				ADOConnection::outp("Could not connect : "  . $this->errorMsg());
 			}
 			$this->_connectionID = null;
-			throw new Exception("Failed to connect to $argHostname (socket: $this->socket) mysql:". mysqli_connect_error());
 			return false;
 		}
 	}
